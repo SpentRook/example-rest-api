@@ -13,11 +13,11 @@ public class BookDto {
     private int year;
     private String author;
     private String rated;
-    private String category;
+    private String cover;
 
 
     public Book toModel() {
         boolean rRated = rated.equals("Adult");
-        return new Book(this.name, this.year, this.author, rRated, CategoryBook.fromString(category));
+        return new Book(this.name, this.year, this.author, rRated, CategoryBook.fromString(cover));
     }
 }
