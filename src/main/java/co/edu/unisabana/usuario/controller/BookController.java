@@ -23,7 +23,7 @@ public class BookController {
     public BookReponse registerBook(@RequestBody BookDto bookDto) {
         int result = registerBookLibrary.registerBook(bookDto.toModel());
         if (result == 1) {
-            return new BookReponse("Actualizada cantidad");
+            return new BookReponse("Cantidad actualizada");
         }
         return new BookReponse("Nuevo libro registrado");
 
