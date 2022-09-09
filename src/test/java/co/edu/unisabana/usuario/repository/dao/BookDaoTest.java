@@ -44,4 +44,19 @@ public class BookDaoTest {
         bookDao.registerBook(book);
         assertTrue(bookDao.validateExistsBook(book.getName()));
     }
+
+    @Test
+    public void Given_book_name_When_deleteBook_and_Exists_Then_Return_True(){
+        CategoryBook category = CategoryBook.fromString("duro");
+        Book book = new Book("Otro libro random", 1955, "J. R. R. Tolkien", false, category);
+        bookDao.registerBook(book);
+        assertTrue(bookDao.deleteBook(book.getName()));
+    }
+
+    @Test
+    public void Given_book_name_When_deleteBook_and_NotExists_Then_Throw_IllegalArgumentException(){
+        assertThrows(IllegalArgumentException.class, ()->{
+            bookDao.deleteBook("El psicoanalista 2");
+        });
+    }
 }
