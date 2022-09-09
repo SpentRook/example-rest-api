@@ -11,13 +11,10 @@ public class BookController {
 
     private final RegisterBookLibrary registerBookLibrary;
 
-
     public BookController(RegisterBookLibrary registerBookLibrary) {
         this.registerBookLibrary = registerBookLibrary;
     }
 
-    // Pendiente validar uso de exception handler
-    // explicar camel case
     @PostMapping("/register")
     @ResponseBody
     public BookReponse registerBook(@RequestBody BookDto bookDto) {
