@@ -16,10 +16,10 @@ public class DeleterBookLibrary {
         this.deleteBookPort = deleteBookPort;
     }
 
-    public int deleteBook(Book book) {
-        boolean exists = searchBookPort.validateExistsBook(book.getName());
+    public int deleteBook(String name) {
+        boolean exists = searchBookPort.validateExistsBook(name);
         if (exists) {
-            deleteBookPort.deleteBook(book.getName());
+            deleteBookPort.deleteBook(name);
             return 1;
         } else {
             return 2;
