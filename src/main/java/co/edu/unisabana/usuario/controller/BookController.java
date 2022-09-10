@@ -30,8 +30,14 @@ public class BookController {
 
     }
 
-    @GetMapping("/search")
-    public String registerBook() {
-        return "hola";
+    @GetMapping("/search/{author}")
+    public String searchBooksByAuthor(@PathVariable String author) {
+        int result = registerBookLibrary.searchBooksByAuthor(author);
+        if(result == 1){
+            return "fallo";
+        }
+        else{
+            return "funciona";
+        }
     }
 }

@@ -1,10 +1,13 @@
 package co.edu.unisabana.usuario.service.library;
 
+import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.model.Book;
 import co.edu.unisabana.usuario.service.library.port.AddBookPort;
 import co.edu.unisabana.usuario.service.library.port.RegisterBookPort;
 import co.edu.unisabana.usuario.service.library.port.SearchBookPort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class RegisterBookLibrary {
@@ -29,6 +32,14 @@ public class RegisterBookLibrary {
             registerBookPort.registerBook(book);
             return 2;
         }
+    }
+
+    public int searchBooksByAuthor(String author){
+        ArrayList<BookEntity> result = searchBookPort.searchBooksByAuthor(author);
+        if(result.isEmpty()){
+            return 1;
+        }
+        return 2;
     }
 
 
