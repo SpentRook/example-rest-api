@@ -44,4 +44,20 @@ public class BookDaoTest {
         bookDao.registerBook(book);
         assertTrue(bookDao.validateExistsBook(book.getName()));
     }
+
+    @Test
+    public void Given_book_author_Pedro_When_Exists_Then_Return_2_records(){
+        CategoryBook category = CategoryBook.fromString("duro");
+        Book book = new Book("Libro rojo", 1900, "Pedro", false, category);
+        Book book2 = new Book("Libro azul", 1900, "Pedro", false, category);
+        bookDao.registerBook(book);
+        bookDao.registerBook(book2);
+        assertEquals(2, bookDao.searchBooksByAuthor(book.getAuthor()).size());
+    }
+
+    @Test
+    public void Given_book_author_Jonathan_When_NotExists_Then_Return_Empty_Array(){
+
+        assertTrue(bookDao.searchBooksByAuthor("Jonathan").isEmpty());
+    }
 }
