@@ -4,11 +4,9 @@ import co.edu.unisabana.usuario.dto.BookDto;
 import co.edu.unisabana.usuario.dto.BookListResponse;
 import co.edu.unisabana.usuario.dto.BookReponse;
 import co.edu.unisabana.usuario.service.library.DeleterBookLibrary;
-import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.RegisterBookLibrary;
+import co.edu.unisabana.usuario.service.library.SearcherBooksByAuthor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/book")
@@ -16,11 +14,13 @@ public class BookController {
 
     private final RegisterBookLibrary registerBookLibrary;
     private final DeleterBookLibrary deleterBookLibrary;
+    private final SearcherBooksByAuthor searcherBooksByAuthor;
 
 
-    public BookController(RegisterBookLibrary registerBookLibrary, DeleterBookLibrary deleterBookLibrary) {
+    public BookController(RegisterBookLibrary registerBookLibrary, DeleterBookLibrary deleterBookLibrary, SearcherBooksByAuthor searchBooksByAuthor) {
         this.registerBookLibrary = registerBookLibrary;
         this.deleterBookLibrary = deleterBookLibrary;
+        this.searcherBooksByAuthor = searchBooksByAuthor;
     }
 
     @PostMapping("/register")
@@ -48,6 +48,6 @@ public class BookController {
 
     @GetMapping("/search")
     public BookListResponse searchBooksByAuthor(@RequestParam String author) {
-        return new BookListResponse(registerBookLibrary.searchBooksByAuthor(author));
+        return new BookListResponse(searcherBooksByAuthor.searchBooksByAuthor(author));
     }
 }
