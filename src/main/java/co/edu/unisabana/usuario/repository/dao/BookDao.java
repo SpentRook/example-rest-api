@@ -3,6 +3,7 @@ package co.edu.unisabana.usuario.repository.dao;
 import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.model.Book;
 import co.edu.unisabana.usuario.service.library.port.AddBookPort;
+import co.edu.unisabana.usuario.service.library.port.DeleteBookPort;
 import co.edu.unisabana.usuario.service.library.port.RegisterBookPort;
 import co.edu.unisabana.usuario.service.library.port.SearchBookPort;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Repository
-public class BookDao implements SearchBookPort, RegisterBookPort, AddBookPort {
+public class BookDao implements SearchBookPort, RegisterBookPort, AddBookPort, DeleteBookPort {
 
     static List<BookEntity> listBooks = new ArrayList<>();
 
@@ -44,5 +45,16 @@ public class BookDao implements SearchBookPort, RegisterBookPort, AddBookPort {
             }
         }
         throw new IllegalArgumentException("No existe libre para actualizar");
+    }
+
+    @Override
+    public boolean deleteBook(String name) {
+        for (BookEntity book : listBooks) {
+            if (book.getName().equals(name)) {
+                listBooks.remove(book);
+                return true;
+            }
+        }
+        throw new IllegalArgumentException("No existe libre para eliminar");
     }
 }
