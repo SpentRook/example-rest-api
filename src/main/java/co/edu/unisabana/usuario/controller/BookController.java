@@ -1,6 +1,7 @@
 package co.edu.unisabana.usuario.controller;
 
 import co.edu.unisabana.usuario.dto.BookDto;
+import co.edu.unisabana.usuario.dto.BookListResponse;
 import co.edu.unisabana.usuario.dto.BookReponse;
 import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.RegisterBookLibrary;
@@ -33,8 +34,8 @@ public class BookController {
 
     }
 
-    @GetMapping("/search/{author}")
-    public ArrayList<BookEntity> searchBooksByAuthor(@PathVariable String author) {
-        return registerBookLibrary.searchBooksByAuthor(author);
+    @GetMapping("/search")
+    public BookListResponse searchBooksByAuthor(@RequestParam String author) {
+        return new BookListResponse(registerBookLibrary.searchBooksByAuthor(author));
     }
 }
