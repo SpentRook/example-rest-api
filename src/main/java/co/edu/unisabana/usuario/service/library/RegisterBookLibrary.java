@@ -34,12 +34,8 @@ public class RegisterBookLibrary {
         }
     }
 
-    public int searchBooksByAuthor(String author){
-        ArrayList<BookEntity> result = searchBookPort.searchBooksByAuthor(author);
-        if(result.isEmpty()){
-            return 1;
-        }
-        return 2;
+    public ArrayList<BookEntity> searchBooksByAuthor(String author){
+        return searchBookPort.searchBooksByAuthor(author);
     }
 
 

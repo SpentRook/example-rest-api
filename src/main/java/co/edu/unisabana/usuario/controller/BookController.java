@@ -2,8 +2,11 @@ package co.edu.unisabana.usuario.controller;
 
 import co.edu.unisabana.usuario.dto.BookDto;
 import co.edu.unisabana.usuario.dto.BookReponse;
+import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.RegisterBookLibrary;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/book")
@@ -31,13 +34,7 @@ public class BookController {
     }
 
     @GetMapping("/search/{author}")
-    public String searchBooksByAuthor(@PathVariable String author) {
-        int result = registerBookLibrary.searchBooksByAuthor(author);
-        if(result == 1){
-            return "fallo";
-        }
-        else{
-            return "funciona";
-        }
+    public ArrayList<BookEntity> searchBooksByAuthor(@PathVariable String author) {
+        return registerBookLibrary.searchBooksByAuthor(author);
     }
 }
