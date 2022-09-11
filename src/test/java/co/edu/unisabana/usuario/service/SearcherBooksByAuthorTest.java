@@ -1,9 +1,11 @@
 package co.edu.unisabana.usuario.service;
 
+
 import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.SearcherBooksByAuthor;
 import co.edu.unisabana.usuario.service.library.model.Book;
 import co.edu.unisabana.usuario.service.library.model.CategoryBook;
+import co.edu.unisabana.usuario.service.library.port.RegisterBookPort;
 import co.edu.unisabana.usuario.service.library.port.SearchBookPort;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 
 import java.util.ArrayList;
 
@@ -25,6 +28,9 @@ public class SearcherBooksByAuthorTest {
     @Mock
     private SearchBookPort searchBookPort;
 
+    @Mock
+    private RegisterBookPort registerBookPort;
+
     private Book book;
 
     @BeforeEach
@@ -34,9 +40,17 @@ public class SearcherBooksByAuthorTest {
     }
 
     @Test
-    public void Given_existing_books_for_author_When_searchBooksByAuthor_return_list_of_books(){
-        ArrayList<BookEntity> result = service.searchBooksByAuthor("Libro A");
-        Mockito.verify(searchBookPort).searchBooksByAuthor("Libro A");
+    public void Given_existing_books_for_author_When_searchBooksByAuthor_return_1_book(){
+        registerBookPort.registerBook(book);
+        ArrayList<BookEntity> result = service.searchBooksByAuthor("Jonathan B");
+        Mockito.verify(searchBookPort).searchBooksByAuthor("Jonathan B");
         Assertions.assertEquals(1, result.size());
+    }
+
+    @Test
+    public void Given_non_existing_books_for_author_When_searchBooksByAuthor_return_0_books(){
+        ArrayList<BookEntity> result = service.searchBooksByAuthor("Jonathan B");
+        Mockito.verify(searchBookPort).searchBooksByAuthor("Jonathan B");
+        Assertions.assertEquals(0, result.size());
     }
 }
