@@ -23,8 +23,6 @@ public class BookController {
         this.deleterBookLibrary = deleterBookLibrary;
     }
 
-    // Pendiente validar uso de exception handler
-    // explicar camel case
     @PostMapping("/register")
     @ResponseBody
     public BookReponse registerBook(@RequestBody BookDto bookDto) {

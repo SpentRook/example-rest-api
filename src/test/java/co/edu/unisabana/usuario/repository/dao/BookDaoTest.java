@@ -59,4 +59,18 @@ public class BookDaoTest {
             bookDao.deleteBook("El psicoanalista 2");
         });
     }
+
+    @Test
+    public void Given_BookListSize_When_Validate_Quantity_Is_Greater_Than_15_Then_Throw_IllegalArgumentException() {
+        CategoryBook category = CategoryBook.fromString("duro");
+        Book book1 = new Book("Book 1", 2000, "Test", false, category);
+        bookDao.registerBook(book1);
+        for (int i = 1; i <= 15;i = i + 1) {
+            bookDao.addBook("Book 1");
+        }
+        assertThrows(IllegalArgumentException.class, ()->{
+            bookDao.addBook("Book 1");
+        });
+    }
+
 }

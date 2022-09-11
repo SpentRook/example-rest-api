@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Repository
 public class BookDao implements SearchBookPort, RegisterBookPort, AddBookPort, DeleteBookPort {
 
-    static List<BookEntity> listBooks = new ArrayList<>();
+    public static List<BookEntity> listBooks = new ArrayList<>();
 
     @Override
     public boolean validateExistsBook(String nameBook) {
@@ -51,11 +51,18 @@ public class BookDao implements SearchBookPort, RegisterBookPort, AddBookPort, D
     public boolean addBook(String name) {
         for (BookEntity book : listBooks) {
             if (book.getName().equals(name)) {
+                if (book.getQuantity() > 15) {
+                    throw new IllegalArgumentException("No es posible agregar más unidades del libro");
+                }
                 book.setQuantity(book.getQuantity() + 1);
                 return true;
             }
+
         }
-        throw new IllegalArgumentException("No existe libre para actualizar");
+        throw new IllegalArgumentException("No existe libro para actualizar");
+
+
+
     }
 
     @Override
