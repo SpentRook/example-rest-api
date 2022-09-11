@@ -28,6 +28,17 @@ public class BookDao implements SearchBookPort, RegisterBookPort, AddBookPort, D
         return exists.get();
     }
 
+    @Override
+    public ArrayList<BookEntity> searchBooksByAuthor(String author) {
+        ArrayList<BookEntity> matchingBooks = new ArrayList<>();
+        listBooks.forEach(book -> {
+            if(book.getAuthor().equals(author)){
+                matchingBooks.add(book);
+            }
+        });
+        return matchingBooks;
+    }
+
 
     @Override
     public void registerBook(Book newBook) {

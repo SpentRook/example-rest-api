@@ -1,10 +1,14 @@
 package co.edu.unisabana.usuario.controller;
 
 import co.edu.unisabana.usuario.dto.BookDto;
+import co.edu.unisabana.usuario.dto.BookListResponse;
 import co.edu.unisabana.usuario.dto.BookReponse;
 import co.edu.unisabana.usuario.service.library.DeleterBookLibrary;
+import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.RegisterBookLibrary;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/book")
@@ -45,7 +49,7 @@ public class BookController {
 
 
     @GetMapping("/search")
-    public String registerBook() {
-        return "hola";
+    public BookListResponse searchBooksByAuthor(@RequestParam String author) {
+        return new BookListResponse(registerBookLibrary.searchBooksByAuthor(author));
     }
 }
