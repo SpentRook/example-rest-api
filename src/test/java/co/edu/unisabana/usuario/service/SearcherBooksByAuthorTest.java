@@ -1,6 +1,7 @@
 package co.edu.unisabana.usuario.service;
 
 
+import co.edu.unisabana.usuario.exception.NoContentException;
 import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.SearcherBooksByAuthor;
 import co.edu.unisabana.usuario.service.library.model.Book;
@@ -15,8 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.util.Assert;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +35,7 @@ public class SearcherBooksByAuthorTest {
     private RegisterBookPort registerBookPort;
 
     private Book book;
+    private ArrayList<BookEntity> books = new ArrayList<>();
 
     @BeforeEach
     public void setUp(){
@@ -40,17 +44,19 @@ public class SearcherBooksByAuthorTest {
     }
 
     @Test
-    public void Given_existing_books_for_author_When_searchBooksByAuthor_return_1_book(){
-        registerBookPort.registerBook(book);
-        ArrayList<BookEntity> result = service.searchBooksByAuthor("Jonathan B");
-        Mockito.verify(searchBookPort).searchBooksByAuthor("Jonathan B");
+    public void Given_existing_books_for_author_When_searchBooksByAuthor_Then_return_1_book(){
+        BookEntity bookEntity = BookEntity.fromModel(book);
+        books.add(bookEntity);
+        Mockito.when(searchBookPort.searchBooksByAuthor(book.getAuthor())).thenReturn(books);
+        ArrayList<BookEntity> result = service.searchBooksByAuthor(book.getAuthor());
         Assertions.assertEquals(1, result.size());
     }
 
     @Test
-    public void Given_non_existing_books_for_author_When_searchBooksByAuthor_return_0_books(){
-        ArrayList<BookEntity> result = service.searchBooksByAuthor("Jonathan B");
-        Mockito.verify(searchBookPort).searchBooksByAuthor("Jonathan B");
-        Assertions.assertEquals(0, result.size());
+    public void Given_non_existing_books_for_author_When_searchBooksByAuthor_Then_throwException(){
+        Mockito.when(searchBookPort.searchBooksByAuthor(book.getAuthor())).thenReturn(new ArrayList<>());
+        Assertions.assertThrows(NoContentException.class, () -> {
+            service.searchBooksByAuthor(book.getAuthor());
+        });
     }
 }
