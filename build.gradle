@@ -24,6 +24,20 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+jacocoTestReport{
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"co/edu/unisabana/usuario/**/*model",
+					"co/edu/unisabana/usuario/dto",
+					"co/edu/unisabana/usuario/repository/dao",
+					"co/edu/unisabana/usuario/service/model",
+					"**/config/*"
+			])
+		}))
+	}
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
