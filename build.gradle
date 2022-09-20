@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.2'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'co.edu.unisabana'
@@ -21,6 +22,22 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+jacocoTestReport{
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"**/dto/**",
+					"**/model/*",
+					"**/entity/*",
+					"**/exception/*",
+					"co/edu/unisabana/usuario/UsuarioApplication.class",
+					"co/edu/unisabana/usuario/controller/UserController.class",
+					"co/edu/unisabana/usuario/repository/dao/UserDao.class",
+			])
+		}))
+	}
 }
 
 tasks.named('test') {

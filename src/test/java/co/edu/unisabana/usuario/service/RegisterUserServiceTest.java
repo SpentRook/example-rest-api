@@ -56,7 +56,19 @@ public class RegisterUserServiceTest {
         int result = service.registerUser(user);
 
         Mockito.verify(registerUserPort).addNewUser(user);
-        assertEquals(2, result);
+        assertEquals(10, result);
+    }
+
+    @Test
+    public void Given_data_ok_When_RegisterUser_Then_unsuccessful() {
+        User user = new User();
+        user.setName("Daniel");
+        user.setAge(19);
+        Mockito.when(registerUserPort.addNewUser(user)).thenReturn(false);
+        int result = service.registerUser(user);
+
+        Mockito.verify(registerUserPort).addNewUser(user);
+        assertEquals(3, result);
     }
 
 

@@ -1,5 +1,6 @@
 package co.edu.unisabana.usuario.service.library;
 
+import co.edu.unisabana.usuario.exception.NoContentException;
 import co.edu.unisabana.usuario.repository.dao.entity.BookEntity;
 import co.edu.unisabana.usuario.service.library.port.SearchBookPort;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,10 @@ public class SearcherBooksByAuthor {
     }
 
     public ArrayList<BookEntity> searchBooksByAuthor(String author){
-        return searchBookPort.searchBooksByAuthor(author);
+        ArrayList<BookEntity> books = searchBookPort.searchBooksByAuthor(author);
+        if(books.isEmpty()){
+            throw new NoContentException("No hay libros de ese autor");
+        }
+            return books;
     }
 }
