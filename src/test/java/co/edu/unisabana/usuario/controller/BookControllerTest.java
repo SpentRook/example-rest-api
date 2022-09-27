@@ -36,7 +36,7 @@ public class BookControllerTest extends AbstractTest {
         BookDto dto = new BookDto("Book 1", 2003, "Pedro", "Commercial", "suave");
         restTemplate.postForEntity(PATH_REGISTER_BOOK, dto, BookReponse.class);
         ResponseEntity<BookReponse> result = restTemplate.postForEntity(PATH_REGISTER_BOOK, dto, BookReponse.class);
-        assertEquals("Actualizada cantidad", result.getBody().getData());
+        assertEquals("Cantidad actualizada", result.getBody().getData());
 
     }
 
