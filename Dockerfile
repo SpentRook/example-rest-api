@@ -1,0 +1,10 @@
+FROM openjdk
+
+COPY build/libs/usuario-0.0.1-SNAPSHOT.jar app.jar
+
+#java -jar app.jar #FORMA DE EJECUTAR UNA JAVA APP DESDE CONSOLA
+
+#ENTRYPOINT SIRVE PARA EJECUTAR UN ARCHIVO
+#CMD SIRVE PARA EJECUTAR UN COMANDO
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]
