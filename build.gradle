@@ -26,19 +26,31 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+
 jacocoTestReport{
-	afterEvaluate {
-		classDirectories.setFrom(files(classDirectories.files.collect {
-			fileTree(dir: it, exclude: [
-					"**/dto/**",
-					"**/model/*",
-					"**/entity/*",
-					"**/exception/*",
-					"co/edu/unisabana/usuario/UsuarioApplication.class",
-					"co/edu/unisabana/usuario/controller/UserController.class",
-					"co/edu/unisabana/usuario/repository/dao/UserDao.class",
-			])
-		}))
+	dependsOn(tasks.test)
+	finalizedBy(tasks.jacocoTestCoverageVerification)
+	classDirectories.setFrom(files(classDirectories.files.collect {
+		fileTree(dir: it, exclude: [
+				"**/dto/**",
+				"**/model/*",
+				"**/entity/*",
+				"**/exception/*",
+				"co/edu/unisabana/usuario/UsuarioApplication.class",
+				"co/edu/unisabana/usuario/controller/UserController.class",
+				"co/edu/unisabana/usuario/repository/dao/UserDao.class",
+		])
+	}))
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			classDirectories.setFrom(jacocoTestReport.getAllClassDirs())
+			limit {
+				minimum = 0.9
+			}
+		}
 	}
 }
 
