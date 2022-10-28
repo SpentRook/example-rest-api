@@ -29,7 +29,6 @@ dependencies {
 
 jacocoTestReport{
 	dependsOn(tasks.test)
-	finalizedBy(tasks.jacocoTestCoverageVerification)
 	classDirectories.setFrom(files(classDirectories.files.collect {
 		fileTree(dir: it, exclude: [
 				"**/dto/**",
@@ -53,6 +52,8 @@ jacocoTestCoverageVerification {
 		}
 	}
 }
+
+project.tasks["sonarqube"].dependsOn(jacocoTestReport)
 
 sonarqube {
 	properties {
