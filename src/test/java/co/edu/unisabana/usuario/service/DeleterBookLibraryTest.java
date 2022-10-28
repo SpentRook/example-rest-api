@@ -36,6 +36,8 @@ public class DeleterBookLibraryTest {
 
     @Test
     public void Given_ExistingBook_When_deleteBook_Then_Return_2(){
-
+        Mockito.when(searchBookPort.validateExistsBook("Libro Ejemplo 1")).thenReturn(false);
+        int result = service.deleteBook("Libro Ejemplo 1");
+        assertEquals(2, result);
     }
 }
